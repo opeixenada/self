@@ -24,19 +24,33 @@
 
 html {
   scroll-behavior: smooth;
+  height: 100%;
 }
 
 body {
   color: var(--color-theme-text-primary);
   font-family: var(--font-text);
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  min-height: 100%;
+}
+
+/* Create a fixed background using a pseudo-element */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
   background-color: var(--color-theme-rose);
   background-image: linear-gradient(
       to bottom,
       var(--color-theme-rose),
       var(--color-theme-amber)
   );
-  min-height: 100vh; /* Ensures the gradient covers the full viewport height */
-  background-attachment: fixed; /* Prevents gradient from repeating on scroll */
 }
 
 @layer components {
