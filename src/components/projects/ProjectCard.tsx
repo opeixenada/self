@@ -29,6 +29,7 @@ const ProjectCard: React.FC<ProjectItem> = ({ title, description, liveLink, gith
               target="_blank"
               rel="noopener noreferrer"
             >
+              {/* eslint-disable-next-line @typescript-eslint/no-deprecated */}
               <Github size={16} className="mr-1" /> Source
             </AnimatedLink>
           )}

@@ -24,10 +24,12 @@ const Footer: React.FC = () => {
           </SocialLink>
 
           <SocialLink href={LINKEDIN} ariaLabel="Anna's LinkedIn">
+            {/* eslint-disable-next-line @typescript-eslint/no-deprecated */}
             <Linkedin size={20} />
           </SocialLink>
 
           <SocialLink href={GITHUB} ariaLabel="Anna's GitHub">
+            {/* eslint-disable-next-line @typescript-eslint/no-deprecated */}
             <Github size={20} />
           </SocialLink>
         </div>
