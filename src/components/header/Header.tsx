@@ -158,19 +158,13 @@ const Header: React.FC = () => {
               <motion.nav className="py-2">
                 <ul className="mt-4 flex flex-col space-y-4">
                   <motion.li variants={menuItemVariants}>
-                    <AnimatedLink href="#about" onClick={() => setIsMenuOpen(false)}>
-                      About
-                    </AnimatedLink>
+                    <AnimatedLink href="#about">About</AnimatedLink>
                   </motion.li>
                   <motion.li variants={menuItemVariants}>
-                    <AnimatedLink href="#projects" onClick={() => setIsMenuOpen(false)}>
-                      Projects
-                    </AnimatedLink>
+                    <AnimatedLink href="#projects">Projects</AnimatedLink>
                   </motion.li>
                   <motion.li variants={menuItemVariants}>
-                    <AnimatedLink href="#contacts" onClick={() => setIsMenuOpen(false)}>
-                      Contacts
-                    </AnimatedLink>
+                    <AnimatedLink href="#contacts">Contacts</AnimatedLink>
                   </motion.li>
                 </ul>
               </motion.nav>

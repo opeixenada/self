@@ -3,7 +3,6 @@ import React from 'react';
 interface AnimatedLinkProps {
   href: string;
   children: React.ReactNode;
-  onClick?: () => void;
   className?: string;
   rel?: string;
   target?: string;
@@ -12,7 +11,6 @@ interface AnimatedLinkProps {
 const AnimatedLink: React.FC<AnimatedLinkProps> = ({
   href,
   children,
-  onClick,
   className = '',
   rel = '',
   target = '',
@@ -20,7 +18,6 @@ const AnimatedLink: React.FC<AnimatedLinkProps> = ({
   return (
     <a
       href={href}
-      onClick={onClick}
       rel={rel}
       target={target}
       className={`text-theme-text-secondary hover:text-theme-primary group relative transition-colors duration-300 ${className}`}
