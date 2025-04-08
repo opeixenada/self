@@ -46,7 +46,7 @@ const Section: React.FC<SectionProps> = ({ id, title, subtitle, children }) => {
         whileInView="visible"
         viewport={{ amount: 0.2, once: true }}
       >
-        {(title || subtitle) && (
+        {(title ?? subtitle) && (
           <header className="mb-6 text-center md:mb-8">
             {title && <h2 className="mb-4">{title}</h2>}
             {subtitle && (
@@ -67,7 +67,7 @@ const Section: React.FC<SectionProps> = ({ id, title, subtitle, children }) => {
         whileInView="visible"
         viewport={{ amount: 0.2, once: true }}
       >
-        {(title || subtitle) && (
+        {(title ?? subtitle) && (
           <header className="mb-6 text-center md:mb-8">
             {title && <h2 className="mb-4">{title}</h2>}
             {subtitle && (

@@ -13,18 +13,21 @@ const CopyIcon: React.FC<CopyIconProps> = ({ textToCopy }) => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   // Handle actual copy functionality
-  const handleCopy = async (e?: React.MouseEvent | React.TouchEvent) => {
+  const handleCopy = (e?: React.MouseEvent | React.TouchEvent) => {
     if (e) {
       e.stopPropagation();
     }
 
-    try {
-      await navigator.clipboard.writeText(textToCopy);
-      setCopied(true);
-      setShowTooltip(true);
-    } catch (err) {
-      console.error('Failed to copy text: ', err);
-    }
+    // Use void operator to explicitly mark the promise as ignored
+    void (async () => {
+      try {
+        await navigator.clipboard.writeText(textToCopy);
+        setCopied(true);
+        setShowTooltip(true);
+      } catch (err) {
+        console.error('Failed to copy text: ', err);
+      }
+    })();
   };
 
   // Mouse event handlers

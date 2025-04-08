@@ -25,8 +25,14 @@ const ContactForm: React.FC = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  // Void function wrapper around the async function
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    void submitForm();
+  };
+
+  // Async logic
+  const submitForm = async () => {
     setIsSubmitting(true);
     setSubmitError(null);
 

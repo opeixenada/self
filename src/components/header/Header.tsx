@@ -97,6 +97,7 @@ const Header: React.FC = () => {
             {/* Mobile menu button */}
             <div className="flex items-center md:hidden">
               <button
+                type="button"
                 onClick={toggleMenu}
                 className="text-theme-text-secondary hover:text-theme-primary"
                 aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}

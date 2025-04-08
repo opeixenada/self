@@ -17,7 +17,9 @@ const Tooltip: React.FC<TooltipProps> = ({ show, text }) => {
       exit={{ opacity: 0, y: 0 }}
       transition={{ duration: 0.2 }}
       className="bg-theme-gold text-theme-text-secondary pointer-events-none absolute -top-10 left-1/2 -translate-x-1/2 rounded px-3 py-1 text-sm whitespace-nowrap shadow-md"
-      onClick={(e) => e.stopPropagation()}
+      onClick={(e) => {
+        e.stopPropagation();
+      }}
     >
       {text}
     </motion.div>

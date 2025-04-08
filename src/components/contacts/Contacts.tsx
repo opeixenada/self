@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-deprecated */
+
 import React from 'react';
 import ContactForm from './ContactForm';
 import { Github, Linkedin, Mail } from 'lucide-react';
@@ -51,6 +53,7 @@ const Contacts: React.FC = () => {
                 aria-label="Anna's LinkedIn"
                 icon={<Linkedin size={20} />}
               />
+
               <AnimatedIconLink
                 href={GITHUB}
                 aria-label="Anna's GitHub"

@@ -37,7 +37,9 @@ const ThemePreview = () => {
         {/* Buttons Card */}
         <Card title="Buttons">
           <div className="space-y-4">
-            <button className="btn-theme-outline w-full">Outline Button</button>
+            <button type="button" className="btn-theme-outline w-full">
+              Outline Button
+            </button>
           </div>
         </Card>
 

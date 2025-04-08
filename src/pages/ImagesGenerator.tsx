@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 const FAVICON_SIZES = [
   { name: 'favicon-16x16.png', size: 16 },
@@ -57,7 +57,7 @@ const ImagesGenerator = () => {
     let svgString = serializer.serializeToString(svg);
 
     // Add namespace
-    if (!svgString.match(/^<svg[^>]+xmlns="http:\/\/www\.w3\.org\/2000\/svg"/)) {
+    if (!/^<svg[^>]+xmlns="http:\/\/www\.w3\.org\/2000\/svg"/.exec(svgString)) {
       svgString = svgString.replace(/^<svg/, '<svg xmlns="http://www.w3.org/2000/svg"');
     }
 
@@ -110,7 +110,7 @@ const ImagesGenerator = () => {
       downloadLink.href = url;
       downloadLink.click();
       URL.revokeObjectURL(url);
-    } catch (error) {
+    } catch (error: unknown) {
       console.error(`Error generating ${faviconSize.name}:`, error);
     }
   };
@@ -122,69 +122,81 @@ const ImagesGenerator = () => {
       for (const size of FAVICON_SIZES) {
         await downloadFavicon(size);
       }
-    } catch (error) {
+    } catch (error: unknown) {
       console.error('Error generating favicons:', error);
     }
   };
 
   // Function to generate social media preview image
-  const generateSocialImage = (socialSize: SocialSize) => {
-    if (!socialCanvasRef.current) return;
+  const generateSocialImage = useCallback(
+    (socialSize: SocialSize) => {
+      if (!socialCanvasRef.current) return;
 
-    const canvas = socialCanvasRef.current;
-    canvas.width = socialSize.width;
-    canvas.height = socialSize.height;
-    const ctx = canvas.getContext('2d');
+      const canvas = socialCanvasRef.current;
+      canvas.width = socialSize.width;
+      canvas.height = socialSize.height;
+      const ctx = canvas.getContext('2d');
 
-    if (!ctx) {
-      console.error('Failed to get canvas context');
-      return;
-    }
+      if (!ctx) {
+        console.error('Failed to get canvas context');
+        return;
+      }
 
-    // Create gradient background
-    const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
-    gradient.addColorStop(0, colors.gradientStart);
-    gradient.addColorStop(1, colors.gradientEnd);
-    ctx.fillStyle = gradient;
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+      // Create gradient background
+      const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+      gradient.addColorStop(0, colors.gradientStart);
+      gradient.addColorStop(1, colors.gradientEnd);
+      ctx.fillStyle = gradient;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    // Draw logo
-    const logoSize = Math.min(canvas.height * 0.4, 200);
-    const logoX = canvas.width / 2;
-    const logoY = canvas.height * 0.38;
+      // Draw logo
+      const logoSize = Math.min(canvas.height * 0.4, 200);
+      const logoX = canvas.width / 2;
+      const logoY = canvas.height * 0.38;
 
-    // Draw circle
-    ctx.beginPath();
-    ctx.arc(logoX, logoY, logoSize / 2, 0, Math.PI * 2);
-    ctx.fillStyle = colors.bgColor;
-    ctx.fill();
-    ctx.strokeStyle = colors.borderColor;
-    ctx.lineWidth = logoSize * 0.04;
-    ctx.stroke();
+      // Draw circle
+      ctx.beginPath();
+      ctx.arc(logoX, logoY, logoSize / 2, 0, Math.PI * 2);
+      ctx.fillStyle = colors.bgColor;
+      ctx.fill();
+      ctx.strokeStyle = colors.borderColor;
+      ctx.lineWidth = logoSize * 0.04;
+      ctx.stroke();
 
-    // Draw letter
-    ctx.font = `bold ${logoSize * 0.7}px Montserrat, sans-serif`;
-    ctx.fillStyle = colors.textColor;
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    ctx.fillText(letter, logoX, logoY);
-
-    // Draw name
-    ctx.font = `${canvas.height * 0.1}px Montserrat, sans-serif`;
-    ctx.fillStyle = colors.textColor;
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    ctx.fillText(name, canvas.width / 2, canvas.height * 0.7);
-
-    // Draw tagline
-    if (tagline) {
-      ctx.font = `${canvas.height * 0.05}px Montserrat, sans-serif`;
+      // Draw letter
+      ctx.font = `bold ${String(Math.floor(logoSize * 0.7))}px Montserrat, sans-serif`;
       ctx.fillStyle = colors.textColor;
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
-      ctx.fillText(tagline, canvas.width / 2, canvas.height * 0.8);
-    }
-  };
+      ctx.fillText(letter, logoX, logoY);
+
+      // Draw name
+      ctx.font = `${String(Math.floor(canvas.height * 0.1))}px Montserrat, sans-serif`;
+      ctx.fillStyle = colors.textColor;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(name, canvas.width / 2, canvas.height * 0.7);
+
+      // Draw tagline
+      if (tagline) {
+        ctx.font = `${String(Math.floor(canvas.height * 0.05))}px Montserrat, sans-serif`;
+        ctx.fillStyle = colors.textColor;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(tagline, canvas.width / 2, canvas.height * 0.8);
+      }
+    },
+    [
+      letter,
+      name,
+      tagline,
+      colors.bgColor,
+      colors.borderColor,
+      colors.gradientEnd,
+      colors.gradientStart,
+      colors.textColor,
+    ],
+  );
 
   // Function to download social image
   const downloadSocialImage = (socialSize: SocialSize) => {
@@ -217,7 +229,7 @@ const ImagesGenerator = () => {
     let svgString = serializer.serializeToString(svg);
 
     // Add namespace
-    if (!svgString.match(/^<svg[^>]+xmlns="http:\/\/www\.w3\.org\/2000\/svg"/)) {
+    if (!/^<svg[^>]+xmlns="http:\/\/www\.w3\.org\/2000\/svg"/.exec(svgString)) {
       svgString = svgString.replace(/^<svg/, '<svg xmlns="http://www.w3.org/2000/svg"');
     }
 
@@ -226,7 +238,9 @@ const ImagesGenerator = () => {
     const url = URL.createObjectURL(svgBlob);
     setDownloadUrl(url);
 
-    return () => URL.revokeObjectURL(url);
+    return () => {
+      URL.revokeObjectURL(url);
+    };
   };
 
   const generateHtmlCode = () => {
@@ -258,7 +272,7 @@ const ImagesGenerator = () => {
       .then(() => {
         alert('HTML code copied to clipboard!');
       })
-      .catch((err) => {
+      .catch((err: unknown) => {
         console.error('Failed to copy: ', err);
       });
   };
@@ -268,7 +282,7 @@ const ImagesGenerator = () => {
     if (selectedTab === 'social' && socialCanvasRef.current) {
       generateSocialImage(SOCIAL_SIZES[0]);
     }
-  }, [selectedTab, name, tagline, letter]);
+  }, [selectedTab, name, tagline, letter, generateSocialImage]);
 
   return (
     <div className="container mx-auto max-w-5xl p-6 pt-14">
@@ -277,26 +291,35 @@ const ImagesGenerator = () => {
       <div className="card-theme p-6">
         <div className="mb-6 flex border-b border-black">
           <button
+            type="button"
             className={`mr-4 px-3 pt-1 pb-2 ${
               selectedTab === 'favicons' ? 'border-b-2 border-black font-bold' : ''
             }`}
-            onClick={() => setSelectedTab('favicons')}
+            onClick={() => {
+              setSelectedTab('favicons');
+            }}
           >
             Favicon Generator
           </button>
           <button
+            type="button"
             className={`mr-4 px-3 pt-1 pb-2 ${
               selectedTab === 'social' ? 'border-b-2 border-black font-bold' : ''
             }`}
-            onClick={() => setSelectedTab('social')}
+            onClick={() => {
+              setSelectedTab('social');
+            }}
           >
             Social Media Images
           </button>
           <button
+            type="button"
             className={`mr-4 px-3 pt-1 pb-2 ${
               selectedTab === 'htmlCode' ? 'border-b-2 border-black font-bold' : ''
             }`}
-            onClick={() => setSelectedTab('htmlCode')}
+            onClick={() => {
+              setSelectedTab('htmlCode');
+            }}
           >
             HTML Code
           </button>
@@ -312,12 +335,20 @@ const ImagesGenerator = () => {
                   className="input-theme"
                   maxLength={1}
                   value={letter}
-                  onChange={(e) => setLetter(e.target.value.charAt(0).toUpperCase())}
+                  onChange={(e) => {
+                    setLetter(e.target.value.charAt(0).toUpperCase());
+                  }}
                 />
               </div>
 
               <div className="mt-6">
-                <button className="btn-theme-outline mb-3 w-full" onClick={downloadAllFavicons}>
+                <button
+                  type="button"
+                  className="btn-theme-outline mb-3 w-full"
+                  onClick={() => {
+                    void downloadAllFavicons();
+                  }}
+                >
                   Download All Favicon Sizes
                 </button>
               </div>
@@ -327,29 +358,17 @@ const ImagesGenerator = () => {
                 <div className="grid grid-cols-2 gap-2">
                   {FAVICON_SIZES.map((size) => (
                     <button
+                      type="button"
                       key={size.name}
                       className="btn-theme-outline py-1 text-xs"
-                      onClick={() => downloadFavicon(size)}
+                      onClick={() => {
+                        void downloadFavicon(size);
+                      }}
                     >
                       {size.name} ({size.size}×{size.size})
                     </button>
                   ))}
                 </div>
-              </div>
-
-              <div className="mt-6">
-                <div className="mb-2 flex items-center justify-between">
-                  <h3 className="label-theme">HTML Code for your website:</h3>
-                  <button
-                    className="rounded border border-black bg-white/30 px-2 py-1 text-xs"
-                    onClick={copyHtmlToClipboard}
-                  >
-                    Copy HTML
-                  </button>
-                </div>
-                <pre className="max-h-40 overflow-x-auto overflow-y-auto rounded-md border border-black bg-white/20 p-3 text-sm">
-                  {generateHtmlCode()}
-                </pre>
               </div>
             </div>
 
@@ -408,7 +427,9 @@ const ImagesGenerator = () => {
                   className="input-theme"
                   maxLength={1}
                   value={letter}
-                  onChange={(e) => setLetter(e.target.value.charAt(0).toUpperCase())}
+                  onChange={(e) => {
+                    setLetter(e.target.value.charAt(0).toUpperCase());
+                  }}
                 />
               </div>
 
@@ -418,7 +439,9 @@ const ImagesGenerator = () => {
                   type="text"
                   className="input-theme"
                   value={name}
-                  onChange={(e) => setName(e.target.value)}
+                  onChange={(e) => {
+                    setName(e.target.value);
+                  }}
                 />
               </div>
 
@@ -428,7 +451,9 @@ const ImagesGenerator = () => {
                   type="text"
                   className="input-theme"
                   value={tagline}
-                  onChange={(e) => setTagline(e.target.value)}
+                  onChange={(e) => {
+                    setTagline(e.target.value);
+                  }}
                 />
               </div>
 
@@ -437,9 +462,12 @@ const ImagesGenerator = () => {
                 <div className="grid grid-cols-1 gap-2">
                   {SOCIAL_SIZES.map((size) => (
                     <button
+                      type="button"
                       key={size.name}
                       className="btn-theme-outline py-2 text-sm"
-                      onClick={() => downloadSocialImage(size)}
+                      onClick={() => {
+                        downloadSocialImage(size);
+                      }}
                     >
                       {size.label} ({size.width}×{size.height})
                     </button>
@@ -470,7 +498,9 @@ const ImagesGenerator = () => {
                   type="text"
                   className="input-theme"
                   value={name}
-                  onChange={(e) => setName(e.target.value)}
+                  onChange={(e) => {
+                    setName(e.target.value);
+                  }}
                 />
               </div>
 
@@ -480,13 +510,16 @@ const ImagesGenerator = () => {
                   type="text"
                   className="input-theme"
                   value={tagline}
-                  onChange={(e) => setTagline(e.target.value)}
+                  onChange={(e) => {
+                    setTagline(e.target.value);
+                  }}
                 />
               </div>
 
               <div className="mb-2 flex items-center justify-between">
                 <h3 className="label-theme">HTML Code for your website:</h3>
                 <button
+                  type="button"
                   className="rounded border border-black bg-white/30 px-2 py-1 text-xs"
                   onClick={copyHtmlToClipboard}
                 >

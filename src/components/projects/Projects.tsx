@@ -12,9 +12,9 @@ const Projects: React.FC = () => {
       <div className="mb-8">
         <h3 className="mb-4">Things I built for friendly startups</h3>
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-          {startupProjects.map((project, index) => (
+          {startupProjects.map((project) => (
             <ProjectCard
-              key={`startup-${index}`}
+              key={`startup-${project.title}`}
               title={project.title}
               description={project.description}
               image={project.image}
@@ -29,9 +29,9 @@ const Projects: React.FC = () => {
       <div>
         <h3 className="mb-4">Silly things I made for fun</h3>
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-          {sillyProjects.map((project, index) => (
+          {sillyProjects.map((project) => (
             <ProjectCard
-              key={`silly-${index}`}
+              key={`silly-${project.title}`}
               title={project.title}
               description={project.description}
               image={project.image}
