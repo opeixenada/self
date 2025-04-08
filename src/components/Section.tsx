@@ -9,39 +9,37 @@ interface SectionProps {
 }
 
 const Section: React.FC<SectionProps> = ({ id, title, subtitle, children }) => {
-  const variants = {
-    // Variant for mobile: only fades in, no vertical animation
-    fadeOnly: {
-      hidden: { opacity: 0 },
-      visible: {
-        opacity: 1,
-        transition: {
-          duration: 0.6,
-          ease: 'easeOut',
-        },
+  // Animation variants that apply to all screen sizes
+  const mobileVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        duration: 0.6,
+        ease: 'easeOut',
       },
     },
-    // Variant for desktop: includes vertical animation
-    fadeAndSlide: {
-      hidden: { opacity: 0, y: 100 },
-      visible: {
-        opacity: 1,
-        y: 0,
-        transition: {
-          duration: 0.6,
-          ease: 'easeOut',
-        },
+  };
+
+  // Desktop-specific animation variants with vertical slide
+  const desktopVariants = {
+    hidden: { opacity: 0, y: 100 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        ease: 'easeOut',
       },
     },
   };
 
   return (
-    <>
+    <section id={id} className="container mx-auto max-w-5xl py-10 sm:px-6">
       {/* Mobile version (hidden on md and up) */}
-      <motion.section
-        id={id}
-        className={`container mx-auto max-w-5xl py-10 sm:px-6 md:hidden`}
-        variants={variants.fadeOnly}
+      <motion.div
+        className="md:hidden"
+        variants={mobileVariants}
         initial="hidden"
         whileInView="visible"
         viewport={{ amount: 0.2, once: true }}
@@ -56,13 +54,12 @@ const Section: React.FC<SectionProps> = ({ id, title, subtitle, children }) => {
         )}
 
         <main>{children}</main>
-      </motion.section>
+      </motion.div>
 
       {/* Desktop version (hidden below md) */}
-      <motion.section
-        id={id}
-        className={`container mx-auto hidden max-w-5xl py-10 sm:px-6 md:block`}
-        variants={variants.fadeAndSlide}
+      <motion.div
+        className="hidden md:block"
+        variants={desktopVariants}
         initial="hidden"
         whileInView="visible"
         viewport={{ amount: 0.2, once: true }}
@@ -77,8 +74,8 @@ const Section: React.FC<SectionProps> = ({ id, title, subtitle, children }) => {
         )}
 
         <main>{children}</main>
-      </motion.section>
-    </>
+      </motion.div>
+    </section>
   );
 };
 
