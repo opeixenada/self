@@ -24,7 +24,7 @@ const About: React.FC = () => {
 
         <div className="mt-6">
           <a
-            href="/src/assets/anna_yudina_cv.pdf"
+            href="/anna_yudina_cv.pdf"
             download
             className="btn-theme-outline inline-flex items-center justify-center gap-2"
           >
