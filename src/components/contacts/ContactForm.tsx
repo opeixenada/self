@@ -1,17 +1,10 @@
 import React, { useState } from 'react';
-import { Loader2, Send, CheckCircle } from 'lucide-react';
-import { addDoc, collection } from 'firebase/firestore';
-import { db } from '../../firebase/firebase.ts';
-import { motion, AnimatePresence } from 'framer-motion';
-
-interface FormData {
-  name: string;
-  email: string;
-  message: string;
-}
+import { CheckCircle, Loader2, Send } from 'lucide-react';
+import { AnimatePresence, motion } from 'framer-motion';
+import { ContactData, submitContactToFirebase } from '../../firebase/utils.ts';
 
 const ContactForm: React.FC = () => {
-  const [formData, setFormData] = useState<FormData>({
+  const [formData, setFormData] = useState<ContactData>({
     name: '',
     email: '',
     message: '',
@@ -37,22 +30,22 @@ const ContactForm: React.FC = () => {
     setSubmitError(null);
 
     try {
-      // Add the contact message to Firestore
-      await addDoc(collection(db, 'contacts'), {
-        ...formData,
-        timestamp: new Date(),
-      });
-
+      await submitContactToFirebase(formData);
       setIsSubmitted(true);
       setFormData({ name: '', email: '', message: '' });
     } catch (error) {
       console.error('Error submitting form:', error);
-      setSubmitError('Sorry, something went wrong. Please try again.');
+      const errorMessage =
+        error instanceof Error && error.message.includes('timed out')
+          ? 'Request timed out. Please try again later.'
+          : 'Sorry, something went wrong. Please try again.';
+
+      setSubmitError(errorMessage);
     } finally {
       setIsSubmitting(false);
     }
 
-    // Reset the submission status after 5 seconds
+    // Reset the submission status after 5 seconds if submission was successful
     if (!submitError) {
       setTimeout(() => {
         // Small animation delay for better UX
