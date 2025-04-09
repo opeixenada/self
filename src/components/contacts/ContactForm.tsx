@@ -141,18 +141,6 @@ const ContactForm: React.FC = () => {
           >
             <h3 className="text-theme-primary mb-6">Send me a message</h3>
 
-            {submitError && (
-              <motion.div
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: 'auto' }}
-                exit={{ opacity: 0, height: 0 }}
-                className="notification-error"
-                role="alert"
-              >
-                <span className="block sm:inline">{submitError}</span>
-              </motion.div>
-            )}
-
             <div>
               <label htmlFor="name" className="label-theme">
                 Name
@@ -200,6 +188,21 @@ const ContactForm: React.FC = () => {
                 className="input-theme resize-none"
               ></textarea>
             </div>
+
+            {submitError && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{
+                  opacity: 1,
+                  transition: { duration: 0.5, ease: 'easeInOut' },
+                }}
+                exit={{ opacity: 0 }}
+                className="notification-error"
+                role="alert"
+              >
+                <span className="block sm:inline">{submitError}</span>
+              </motion.div>
+            )}
 
             <button
               type="submit"
