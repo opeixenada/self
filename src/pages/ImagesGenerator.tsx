@@ -34,13 +34,12 @@ const ImagesGenerator = () => {
   const [name, setName] = useState('Anna Yudina');
   const [tagline, setTagline] = useState('Software Engineer & Tech Lead');
 
-  // Colors from your theme
   const colors = {
     textColor: '#ffffff',
     bgColor: 'rgba(255, 255, 255, 0.1)', // Semi-transparent white background
     borderColor: '#ffffff',
-    gradientStart: '#FF9EB3', // Rose color from your theme
-    gradientEnd: '#F5BE62', // Amber color from your theme
+    gradientStart: '#FF9EB3',
+    gradientEnd: '#F5BE62',
   };
 
   // Generate favicon when component mounts or letter changes
@@ -353,8 +352,8 @@ const ImagesGenerator = () => {
                 </button>
               </div>
 
-              <div className="mt-6 mb-4">
-                <h3 className="label-theme mb-2">Individual Sizes:</h3>
+              <div className="mt-6">
+                <h3 className="label-theme mb-2">Individual Sizes</h3>
                 <div className="grid grid-cols-2 gap-2">
                   {FAVICON_SIZES.map((size) => (
                     <button
@@ -406,11 +405,11 @@ const ImagesGenerator = () => {
 
               {downloadUrl && (
                 <div className="text-center">
-                  <p className="label-theme mb-2">Preview:</p>
+                  <p className="label-theme mb-2">Preview</p>
                   <div className="inline-block rounded-md border border-black bg-white/20 p-2">
                     <img src={downloadUrl} width="32" height="32" alt="Favicon preview" />
                   </div>
-                  <p className="mt-2 text-xs">Actual size (32×32px)</p>
+                  <p className="mt-2 text-xs">Actual Size (32×32px)</p>
                 </div>
               )}
             </div>
@@ -457,8 +456,8 @@ const ImagesGenerator = () => {
                 />
               </div>
 
-              <div className="mt-6 mb-4">
-                <h3 className="label-theme mb-2">Download Images:</h3>
+              <div className="mt-6">
+                <h3 className="label-theme mb-2">Download Images</h3>
                 <div className="grid grid-cols-1 gap-2">
                   {SOCIAL_SIZES.map((size) => (
                     <button
@@ -484,7 +483,7 @@ const ImagesGenerator = () => {
                   style={{ aspectRatio: '1200/630' }}
                 />
               </div>
-              <p className="text-center text-xs">Preview of social media image (scaled down)</p>
+              <p className="text-center text-xs">Preview of Social Media Image (Scaled Down)</p>
             </div>
           </div>
         )}
@@ -517,7 +516,7 @@ const ImagesGenerator = () => {
               </div>
 
               <div className="mb-2 flex items-center justify-between">
-                <h3 className="label-theme">HTML Code for your website:</h3>
+                <h3 className="label-theme">HTML Code</h3>
                 <button
                   type="button"
                   className="rounded border border-black bg-white/30 px-2 py-1 text-xs"

@@ -3,7 +3,13 @@ import { ExternalLink, Github } from 'lucide-react';
 import { ProjectItem } from '../../data/projects.ts';
 import AnimatedLink from '../AnimatedLink.tsx';
 
-const ProjectCard: React.FC<ProjectItem> = ({ title, description, liveLink, githubLink }) => {
+interface ProjectCardProps {
+  project: ProjectItem;
+}
+
+const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
+  const { title, description, liveLink, githubLink } = project;
+
   return (
     <div className="card-theme flex h-full flex-col overflow-hidden">
       <div className="card-theme-header">
