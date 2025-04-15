@@ -1,10 +1,9 @@
 import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
 import webfontDownload from 'vite-plugin-webfont-dl';
-import react from '@vitejs/plugin-react';
 import Sitemap from 'vite-plugin-sitemap';
 
-// https://vite.dev/config/
 export default defineConfig({
   plugins: [
     react(),
@@ -14,12 +13,8 @@ export default defineConfig({
     ]),
     Sitemap({
       hostname: 'https://raspberry.blue',
-      // Only index the home page:
-      dynamicRoutes: ['/'],
-      exclude: ['/*'],
-      changefreq: 'monthly',
-      priority: 1.0,
-      outDir: 'dist',
+      generateRobotsTxt: true,
+      robots: [{ userAgent: '*', allow: '/' }],
     }),
   ],
   base: '/',
