@@ -33,7 +33,7 @@
     "@types/react-router-dom": "^5.3.3",
     "@types/tailwindcss": "^3.0.11",
     "@vitejs/plugin-react": "^4.3.4",
-    "eslint": "^9.24.0",
+    "eslint": "^9.25.0",
     "eslint-config-prettier": "^10.1.2",
     "eslint-plugin-prettier": "^5.2.6",
     "eslint-plugin-react": "^7.37.5",
