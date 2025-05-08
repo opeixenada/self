@@ -56,18 +56,16 @@ body::before {
 @layer components {
   /* Card styles */
   .card-theme {
-    @apply border border-black rounded-xl overflow-hidden transition-all duration-300;
-    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.25));
-    backdrop-filter: blur(10px);
-    @apply hover:bg-white/15;
+    @apply border border-black rounded-xl overflow-hidden transition-all duration-300
+    bg-gradient-to-b from-white/5 to-white/25
+    hover:from-white/15 hover:to-white/35;
   }
 
   /* Button styles - Glassy transparent look with black borders */
   .btn-theme-outline {
-    @apply relative overflow-hidden bg-white/10 border border-black text-black
-    hover:bg-white/30 hover:border-black
+    @apply relative overflow-hidden bg-white/15 border border-black text-black
+    hover:bg-white/35 hover:border-black
     cursor-pointer tracking-wide text-sm font-medium rounded-lg px-6 py-2 transition-all duration-300;
-    backdrop-filter: blur(5px);
   }
 
   .card-theme-header {
@@ -96,14 +94,12 @@ body::before {
     @apply bg-white/20 border border-black text-black rounded-md p-2
     focus:outline-none focus:border-black focus:bg-white/30
     transition-all duration-300 w-full placeholder:text-black/70;
-    backdrop-filter: blur(5px);
   }
 
   .select-theme {
     @apply bg-white/20 border border-black text-black rounded-md p-2
     focus:outline-none focus:border-black focus:bg-white/30
     transition-all duration-300 w-full appearance-none pr-8;
-    backdrop-filter: blur(5px);
   }
 
   .label-theme {
@@ -117,17 +113,14 @@ body::before {
 
   /* Enhanced notification styles for gradient background */
   .notification-success {
-    @apply rounded-lg border-l-4 border-teal-500 bg-white/30 p-3 text-black px-4;
-    backdrop-filter: blur(5px);
+    @apply rounded-lg border-l-4 border-teal-500 bg-white/30 p-3 text-black px-4 backdrop-blur-sm;
   }
 
   .notification-error {
-    @apply rounded-lg border-l-4 border-theme-coral bg-white/30 p-3 text-black px-4;
-    backdrop-filter: blur(5px);
+    @apply rounded-lg border-l-4 border-theme-coral bg-white/30 p-3 text-black px-4 backdrop-blur-sm;
   }
 
   .notification-themed {
-    @apply bg-white/30 border-theme-amber border-l-4 text-black rounded-lg p-3 px-4;
-    backdrop-filter: blur(5px);
+    @apply bg-white/30 border-theme-amber border-l-4 text-black rounded-lg p-3 px-4 backdrop-blur-sm;
   }
 }
