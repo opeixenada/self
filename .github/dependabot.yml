@@ -7,11 +7,11 @@ updates:
   - package-ecosystem: "npm" # For JavaScript/Node.js dependencies
     directory: "/" # Location of package manifests
     schedule:
-      interval: "weekly"
+      interval: "monthly"
     open-pull-requests-limit: 10
 
   - package-ecosystem: "github-actions" # For GitHub Actions
     directory: "/" # Location of .github/workflows
     schedule:
-      interval: "weekly"
+      interval: "monthly"
     open-pull-requests-limit: 10
