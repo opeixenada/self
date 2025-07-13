@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { Menu, X } from 'lucide-react';
 import AnimatedLink from '../AnimatedLink.tsx';
 import AnimatedLogo from './AnimatedLogo.tsx';
-import { motion, AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion, stagger } from 'framer-motion';
+import { Variants } from 'motion-dom';
 
 const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
@@ -12,7 +13,7 @@ const Header: React.FC = () => {
   };
 
   // Animation variants for the container
-  const mobileMenuContainerVariants = {
+  const mobileMenuContainerVariants: Variants = {
     hidden: {
       height: 0,
       opacity: 0,
@@ -29,8 +30,7 @@ const Header: React.FC = () => {
           duration: 0.3,
           delay: 0.1, // Delay opacity to create sequence
         },
-        staggerChildren: 0.05, // Stagger the children animations
-        delayChildren: 0.1, // Delay children animations
+        delayChildren: stagger(0.05, { startDelay: 0.1 }),
       },
     },
     exit: {
@@ -45,14 +45,13 @@ const Header: React.FC = () => {
           duration: 0.2,
         },
         when: 'afterChildren', // Exit children first
-        staggerChildren: 0.05,
-        staggerDirection: -1, // Reverse stagger on exit
+        delayChildren: stagger(0.05, { from: 'last' }),
       },
     },
   };
 
   // Animation variants for menu items
-  const menuItemVariants = {
+  const menuItemVariants: Variants = {
     hidden: {
       x: -20,
       opacity: 0,
