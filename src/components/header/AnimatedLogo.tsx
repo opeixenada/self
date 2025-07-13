@@ -1,7 +1,8 @@
 import { motion } from 'framer-motion';
+import { Variants } from 'motion-dom';
 
 const AnimatedLogo = () => {
-  const logoVariants = {
+  const logoVariants: Variants = {
     initial: {
       opacity: 0,
       x: -50,

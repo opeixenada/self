@@ -1,5 +1,6 @@
 import React, { ReactNode } from 'react';
 import { motion } from 'framer-motion';
+import { Variants } from 'motion-dom';
 
 interface SectionProps {
   id?: string;
@@ -10,7 +11,7 @@ interface SectionProps {
 
 const Section: React.FC<SectionProps> = ({ id, title, subtitle, children }) => {
   // Animation variants that apply to all screen sizes
-  const mobileVariants = {
+  const mobileVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
@@ -22,7 +23,7 @@ const Section: React.FC<SectionProps> = ({ id, title, subtitle, children }) => {
   };
 
   // Desktop-specific animation variants with vertical slide
-  const desktopVariants = {
+  const desktopVariants: Variants = {
     hidden: { opacity: 0, y: 100 },
     visible: {
       opacity: 1,
