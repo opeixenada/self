@@ -13,7 +13,7 @@
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {
-    "@tailwindcss/vite": "^4.1.8",
+    "@tailwindcss/vite": "^4.1.11",
     "autoprefixer": "^10.4.21",
     "firebase": "^11.8.1",
     "framer-motion": "^12.23.3",
@@ -32,7 +32,7 @@
     "@types/react-dom": "^19.1.6",
     "@types/react-router-dom": "^5.3.3",
     "@types/tailwindcss": "^3.0.11",
-    "@vitejs/plugin-react": "^4.5.0",
+    "@vitejs/plugin-react": "^4.6.0",
     "eslint": "^9.28.0",
     "eslint-config-prettier": "^10.1.5",
     "eslint-plugin-prettier": "^5.5.1",
@@ -46,8 +46,8 @@
     "prettier-plugin-tailwindcss": "^0.6.13",
     "typescript": "~5.8.3",
     "typescript-eslint": "^8.35.1",
-    "vite": "^6.3.5",
+    "vite": "^7.0.0",
     "vite-plugin-sitemap": "^0.8.2",
-    "vite-plugin-webfont-dl": "^3.10.4"
+    "vite-plugin-webfont-dl": "^3.11.0"
   }
 }
