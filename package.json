@@ -19,7 +19,7 @@
     "framer-motion": "^12.23.3",
     "lucide-react": "^0.525.0",
     "postcss": "^8.5.6",
-    "react": "^19.0.0",
+    "react": "^19.1.1",
     "react-dom": "^19.0.0",
     "react-router-dom": "^7.6.1",
     "tailwindcss": "^4.1.7"
@@ -28,7 +28,7 @@
     "@eslint/js": "^9.28.0",
     "@tailwindcss/postcss": "^4.1.11",
     "@tailwindcss/typography": "^0.5.16",
-    "@types/react": "^19.1.6",
+    "@types/react": "^19.1.9",
     "@types/react-dom": "^19.1.6",
     "@types/react-router-dom": "^5.3.3",
     "@types/tailwindcss": "^3.0.11",
