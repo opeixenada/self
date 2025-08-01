@@ -34,7 +34,7 @@
     "@types/tailwindcss": "^3.0.11",
     "@vitejs/plugin-react": "^4.6.0",
     "eslint": "^9.28.0",
-    "eslint-config-prettier": "^10.1.5",
+    "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.1",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-dom": "^1.52.3",
