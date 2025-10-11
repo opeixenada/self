@@ -136,9 +136,6 @@ const Header: React.FC = () => {
                 <AnimatedLink href="#about">About</AnimatedLink>
               </li>
               <li>
-                <AnimatedLink href="#projects">Projects</AnimatedLink>
-              </li>
-              <li>
                 <AnimatedLink href="#contacts">Contacts</AnimatedLink>
               </li>
             </ul>
@@ -159,9 +156,6 @@ const Header: React.FC = () => {
                 <ul className="mt-4 flex flex-col space-y-4">
                   <motion.li variants={menuItemVariants}>
                     <AnimatedLink href="#about">About</AnimatedLink>
-                  </motion.li>
-                  <motion.li variants={menuItemVariants}>
-                    <AnimatedLink href="#projects">Projects</AnimatedLink>
                   </motion.li>
                   <motion.li variants={menuItemVariants}>
                     <AnimatedLink href="#contacts">Contacts</AnimatedLink>

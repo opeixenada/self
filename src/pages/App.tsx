@@ -5,7 +5,6 @@ import Contacts from '../components/contacts/Contacts.tsx';
 import Hero from '../components/Hero.tsx';
 import About from '../components/About.tsx';
 import { domAnimation, LazyMotion } from 'framer-motion';
-import Projects from '../components/projects/Projects.tsx';
 
 const App: React.FC = () => {
   return (
@@ -15,7 +14,6 @@ const App: React.FC = () => {
         <main className="container mx-auto flex-1 space-y-8 px-4 pt-10 pb-8 md:pt-14 md:pb-10">
           <Hero />
           <About />
-          <Projects />
           <Contacts />
         </main>
         <Footer />
