@@ -4,7 +4,7 @@ import { Download } from 'lucide-react';
 
 const About: React.FC = () => {
   return (
-    <Section id="about" title="About me">
+    <Section id="about">
       <div className="flex flex-col items-center">
         <article className="prose text-theme-secondary max-w-2xl">
           <p>
