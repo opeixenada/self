@@ -16,13 +16,6 @@ export const projectsData: ProjectItem[] = [
     category: 'startup',
   },
   {
-    title: 'Yourequal',
-    description: 'Community-led employer-rating platform for marginalised workers.',
-    liveLink: 'https://yourequal.space/',
-    githubLink: null,
-    category: 'startup',
-  },
-  {
     title: 'Urbanwrap',
     description: 'Your personal sports year in review — like Spotify Wrapped but for Urban Sports!',
     liveLink: 'https://urbanwrap.raspberry.blue/',
