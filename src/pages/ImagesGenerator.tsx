@@ -44,7 +44,26 @@ const ImagesGenerator = () => {
 
   // Generate favicon when component mounts or letter changes
   useEffect(() => {
-    generateFaviconUrl();
+    if (!svgRef.current) return;
+
+    const svg = svgRef.current;
+    const serializer = new XMLSerializer();
+    let svgString = serializer.serializeToString(svg);
+
+    // Add namespace
+    if (!/^<svg[^>]+xmlns="http:\/\/www\.w3\.org\/2000\/svg"/.exec(svgString)) {
+      svgString = svgString.replace(/^<svg/, '<svg xmlns="http://www.w3.org/2000/svg"');
+    }
+
+    // Create data URL
+    const svgBlob = new Blob([svgString], { type: 'image/svg+xml;charset=utf-8' });
+    const url = URL.createObjectURL(svgBlob);
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setDownloadUrl(url);
+
+    return () => {
+      URL.revokeObjectURL(url);
+    };
   }, [letter]);
 
   // Function to generate a single favicon PNG
@@ -217,29 +236,6 @@ const ImagesGenerator = () => {
       downloadLink.click();
       URL.revokeObjectURL(url);
     }, 'image/png');
-  };
-
-  // Function to generate favicon URL for preview
-  const generateFaviconUrl = () => {
-    if (!svgRef.current) return;
-
-    const svg = svgRef.current;
-    const serializer = new XMLSerializer();
-    let svgString = serializer.serializeToString(svg);
-
-    // Add namespace
-    if (!/^<svg[^>]+xmlns="http:\/\/www\.w3\.org\/2000\/svg"/.exec(svgString)) {
-      svgString = svgString.replace(/^<svg/, '<svg xmlns="http://www.w3.org/2000/svg"');
-    }
-
-    // Create data URL
-    const svgBlob = new Blob([svgString], { type: 'image/svg+xml;charset=utf-8' });
-    const url = URL.createObjectURL(svgBlob);
-    setDownloadUrl(url);
-
-    return () => {
-      URL.revokeObjectURL(url);
-    };
   };
 
   const generateHtmlCode = () => {

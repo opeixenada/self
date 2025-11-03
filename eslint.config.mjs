@@ -40,6 +40,7 @@ export default tseslint.config(
       ...reactX.configs['recommended-typescript'].rules,
       ...reactDom.configs.recommended.rules,
       'prettier/prettier': 'error', // Show prettier errors as ESLint errors
+      '@typescript-eslint/unified-signatures': 'off', // Disabled due to bug with certain TypeScript syntax
     },
   },
 );
