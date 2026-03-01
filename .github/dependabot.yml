@@ -5,23 +5,15 @@ updates:
     schedule:
       interval: "monthly"
     groups:
-      production-dependencies:
+      all-dependencies:
         patterns:
           - "*"
-        exclude-patterns:
-          - "@types/*"
-          - "*-dev"
-      development-dependencies:
-        patterns:
-          - "@types/*"
-          - "*-dev"
-        dependency-type: "development"
-  
+
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: "monthly"
     groups:
-      github-actions:
+      all-github-actions:
         patterns:
           - "*"
