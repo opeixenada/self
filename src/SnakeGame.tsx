@@ -214,17 +214,55 @@ function initialSnake(): Point[] {
   ];
 }
 
+/** One glyph per body segment (snake[1]..snake[end]); only grows with a new pool draw when eating. */
+function nextBodyGlyphsForTick(
+  prevLen: number,
+  nextLen: number,
+  oldGlyphs: string[],
+  ate: boolean,
+  appendFromPool: () => string,
+): string[] {
+  if (ate) {
+    const L = prevLen;
+    const out = new Array<string>(L);
+    if (L < 2) {
+      return [appendFromPool()];
+    }
+    out[0] = oldGlyphs[L - 2] ?? '墨';
+    for (let i = 1; i < L - 1; i++) {
+      out[i] = oldGlyphs[i - 1] ?? '墨';
+    }
+    out[L - 1] = appendFromPool();
+    return out;
+  }
+  const n = nextLen;
+  if (n <= 1) return [];
+  const out = new Array<string>(n - 1);
+  out[0] = oldGlyphs[n - 2] ?? '墨';
+  for (let i = 1; i < n - 1; i++) {
+    out[i] = oldGlyphs[i - 1] ?? '墨';
+  }
+  return out;
+}
+
 export function SnakeGame() {
   const [snake, setSnake] = useState<Point[]>(initialSnake);
   const [food, setFood] = useState<Food>(() => randomFood(initialSnake()));
   const [gameOver, setGameOver] = useState(false);
   const [faceDir, setFaceDir] = useState({ x: 1, y: 0 });
-  const [bodyGlyphOrder, setBodyGlyphOrder] = useState<string[]>(() =>
-    shuffledCopy(DENSE_BODY_HAN_POOL),
-  );
-  const [tailGlyphOrder, setTailGlyphOrder] = useState<string[]>(() =>
-    shuffledCopy(DENSE_BODY_HAN_POOL),
-  );
+  const glyphPoolRef = useRef(shuffledCopy(DENSE_BODY_HAN_POOL));
+  const appendIdxRef = useRef(2);
+  const takeAppendGlyph = useCallback(() => {
+    const p = glyphPoolRef.current;
+    const i = appendIdxRef.current;
+    appendIdxRef.current = i + 1;
+    return p[i % p.length] ?? '墨';
+  }, []);
+
+  const [bodyGlyphs, setBodyGlyphs] = useState<string[]>(() => {
+    const p = glyphPoolRef.current;
+    return [p[0] ?? '墨', p[1] ?? '墨'];
+  });
   const [score, setScore] = useState(0);
 
   const snakeRef = useRef(snake);
@@ -260,8 +298,10 @@ export function SnakeGame() {
     heldArrowKeysRef.current.clear();
     setArrowHeld(false);
     setFaceDir({ x: 1, y: 0 });
-    setBodyGlyphOrder(shuffledCopy(DENSE_BODY_HAN_POOL));
-    setTailGlyphOrder(shuffledCopy(DENSE_BODY_HAN_POOL));
+    const p = shuffledCopy(DENSE_BODY_HAN_POOL);
+    glyphPoolRef.current = p;
+    appendIdxRef.current = 2;
+    setBodyGlyphs([p[0] ?? '墨', p[1] ?? '墨']);
     setScore(0);
   }, []);
 
@@ -308,6 +348,9 @@ export function SnakeGame() {
 
       snakeRef.current = next;
       setSnake(next);
+      setBodyGlyphs((oldG) =>
+        nextBodyGlyphsForTick(prev.length, next.length, oldG, ate, takeAppendGlyph),
+      );
     };
 
     const ms = arrowHeld ? TICK_MS_FAST : TICK_MS_NORMAL;
@@ -315,7 +358,7 @@ export function SnakeGame() {
     return () => {
       window.clearInterval(id);
     };
-  }, [arrowHeld]);
+  }, [arrowHeld, takeAppendGlyph]);
 
   useEffect(() => {
     const syncHeld = () => {
@@ -428,9 +471,7 @@ export function SnakeGame() {
         );
       } else if (isBody) {
         const isTail = snakeIdx === snake.length - 1;
-        const bodyChar = isTail
-          ? (tailGlyphOrder[(snake.length - 2) % tailGlyphOrder.length] ?? '尾')
-          : (bodyGlyphOrder[(snakeIdx - 1) % bodyGlyphOrder.length] ?? '墨');
+        const bodyChar = bodyGlyphs[snakeIdx - 1] ?? '墨';
         inner = (
           <span
             className="inline-flex items-center justify-center leading-none text-black/38 select-none"
@@ -453,12 +494,14 @@ export function SnakeGame() {
               : 'food-anim-jump';
         inner = (
           <span
-            className={`pointer-events-none inline-flex items-center justify-center leading-none select-none ${foodAnimClass}`}
-            style={{ fontSize: glyphFontSize(92, 34) }}
+            className={`pointer-events-none inline-flex items-center justify-center select-none ${foodAnimClass}`}
+            style={{ fontSize: glyphFontSize(92, 34), lineHeight: 1 }}
             role="img"
             aria-hidden
           >
-            {food.emoji}
+            <span className="inline-block" style={{ transform: 'translateY(0.09em)' }}>
+              {food.emoji}
+            </span>
           </span>
         );
       }
@@ -472,14 +515,14 @@ export function SnakeGame() {
   }
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center p-4">
-      <div
-        className="relative w-[min(96vw,560px)] bg-transparent p-0"
-        role="application"
-        aria-label="Snake game"
-        onTouchStart={onTouchStart}
-        onTouchEnd={onTouchEnd}
-      >
+    <div
+      className="box-border flex h-full max-h-full min-h-0 w-full flex-col items-center justify-center overflow-hidden overscroll-none p-4"
+      role="application"
+      aria-label="Snake game"
+      onTouchStart={onTouchStart}
+      onTouchEnd={onTouchEnd}
+    >
+      <div className="relative w-[min(96vw,560px)] bg-transparent pb-14">
         <p
           className="mb-2 w-full text-left font-mono text-sm tracking-wider text-black/55 tabular-nums"
           aria-live="polite"
