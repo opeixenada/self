@@ -1,5 +1,6 @@
 import React from 'react';
-import { ExternalLink, Github } from 'lucide-react';
+import { ExternalLink } from 'lucide-react';
+import { GitHubIcon } from '../icons/BrandIcons.tsx';
 import { ProjectItem } from '../../data/projects.ts';
 import AnimatedLink from '../AnimatedLink.tsx';
 
@@ -35,8 +36,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
               target="_blank"
               rel="noopener noreferrer"
             >
-              {/* eslint-disable-next-line @typescript-eslint/no-deprecated */}
-              <Github size={16} className="mr-1" /> Source
+              <GitHubIcon size={16} className="mr-1" /> Source
             </AnimatedLink>
           )}
         </div>

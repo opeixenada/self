@@ -1,7 +1,6 @@
-/* eslint-disable @typescript-eslint/no-deprecated */
-
 import React from 'react';
-import { Github, Linkedin, Mail } from 'lucide-react';
+import { Mail } from 'lucide-react';
+import { GitHubIcon, LinkedInIcon } from '../icons/BrandIcons.tsx';
 import AnimatedIconLink from './AnimatedIconLink.tsx';
 import { EMAIL, GITHUB, LINKEDIN } from '../../data/constants.ts';
 import CopyIcon from './CopyIcon.tsx';
@@ -29,10 +28,10 @@ const Contacts: React.FC = () => {
           <AnimatedIconLink
             href={LINKEDIN}
             aria-label="Anna's LinkedIn"
-            icon={<Linkedin size={20} />}
+            icon={<LinkedInIcon size={20} />}
           />
 
-          <AnimatedIconLink href={GITHUB} aria-label="Anna's GitHub" icon={<Github size={20} />} />
+          <AnimatedIconLink href={GITHUB} aria-label="Anna's GitHub" icon={<GitHubIcon size={20} />} />
         </div>
       </div>
     </Section>

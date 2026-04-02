@@ -1,5 +1,6 @@
 import React from 'react';
-import { Github, Linkedin, Mail } from 'lucide-react';
+import { Mail } from 'lucide-react';
+import { GitHubIcon, LinkedInIcon } from '../icons/BrandIcons.tsx';
 import { EMAIL, GITHUB, LINKEDIN } from '../../data/constants.ts';
 import { motion } from 'framer-motion';
 import SocialLink from './SocialLink.tsx';
@@ -24,13 +25,11 @@ const Footer: React.FC = () => {
           </SocialLink>
 
           <SocialLink href={LINKEDIN} ariaLabel="Anna's LinkedIn">
-            {/* eslint-disable-next-line @typescript-eslint/no-deprecated */}
-            <Linkedin size={20} />
+            <LinkedInIcon size={20} />
           </SocialLink>
 
           <SocialLink href={GITHUB} ariaLabel="Anna's GitHub">
-            {/* eslint-disable-next-line @typescript-eslint/no-deprecated */}
-            <Github size={20} />
+            <GitHubIcon size={20} />
           </SocialLink>
         </div>
 
