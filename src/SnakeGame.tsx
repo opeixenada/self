@@ -250,7 +250,7 @@ export function SnakeGame() {
   const [food, setFood] = useState<Food>(() => randomFood(initialSnake()));
   const [gameOver, setGameOver] = useState(false);
   const [faceDir, setFaceDir] = useState({ x: 1, y: 0 });
-  const glyphPoolRef = useRef<string[]>(shuffledCopy(DENSE_BODY_HAN_POOL));
+  const glyphPoolRef = useRef(shuffledCopy(DENSE_BODY_HAN_POOL));
   const appendIdxRef = useRef(2);
   const takeAppendGlyph = useCallback(() => {
     const p = glyphPoolRef.current;
