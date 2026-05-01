@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 
 const COLS = 20;
 const ROWS = 15;
@@ -250,7 +250,8 @@ export function SnakeGame() {
   const [food, setFood] = useState<Food>(() => randomFood(initialSnake()));
   const [gameOver, setGameOver] = useState(false);
   const [faceDir, setFaceDir] = useState({ x: 1, y: 0 });
-  const glyphPoolRef = useRef(shuffledCopy(DENSE_BODY_HAN_POOL));
+  const initialGlyphPool = useMemo(() => shuffledCopy(DENSE_BODY_HAN_POOL), []);
+  const glyphPoolRef = useRef(initialGlyphPool);
   const appendIdxRef = useRef(2);
   const takeAppendGlyph = useCallback(() => {
     const p = glyphPoolRef.current;
@@ -259,10 +260,10 @@ export function SnakeGame() {
     return p[i % p.length] ?? '墨';
   }, []);
 
-  const [bodyGlyphs, setBodyGlyphs] = useState<string[]>(() => {
-    const p = glyphPoolRef.current;
-    return [p[0] ?? '墨', p[1] ?? '墨'];
-  });
+  const [bodyGlyphs, setBodyGlyphs] = useState<string[]>(() => [
+    initialGlyphPool[0] ?? '墨',
+    initialGlyphPool[1] ?? '墨',
+  ]);
   const [score, setScore] = useState(0);
 
   const snakeRef = useRef(snake);
